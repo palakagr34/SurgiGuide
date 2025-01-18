@@ -8,7 +8,7 @@ export default function WelcomeScreen({ navigation }) {
             <Text style={styles.title}>Meet Surgi! </Text>
             <Image source={require('../assets/surgiIntro.png')} style={styles.image}/>
             <Text style={styles.subtitle}>Your surgery guide!</Text>
-            <Button title="Login or Sign up" onPress={()=> navigation.navigate('Login')} />
+            <Button title="Login or Sign up" onPress={()=> navigation.navigate('Register')} />
             <Text style={styles.subtitle}>SurgiGuide</Text>
             <Button title="Find a Procedure" onPress={()=>console.warn('search screen')} />
         </View>

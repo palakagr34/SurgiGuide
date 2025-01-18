@@ -7,13 +7,14 @@ export default function LoginScreen({ navigation }) {
     const [pwd, setPwd] = useState('');
 
     const handleLogin = () => {
-        console.log('Loggin in with: ', email, pwd);
+        console.log('Logging in with: ', email, pwd);
         navigation.navigate('Home');
     }
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Welcome Back!</Text>
+      <Text style={styles.subtitle}>Login</Text>
       <TextInput 
         style={styles.input}
         placeholder="email"
@@ -33,12 +34,7 @@ export default function LoginScreen({ navigation }) {
       />
       <Button title="Login" onPress={handleLogin} />
 
-      <Text style={styles.signupText}>
-        Don’t have an account?{' '}
-        <Text style={styles.signupLink} onPress={() => navigation.navigate('Register')}>
-          Sign Up
-        </Text>
-      </Text>
+      
       
 
     </View>
@@ -58,7 +54,14 @@ const styles = StyleSheet.create({
       fontWeight: 'bold',
       marginBottom: 20,
       color: '#333',
+      fontFamily: 'KulimPark-Bold'
     },
+    subtitle: {
+        fontSize: 20,
+        marginBottom: 20,
+        color: '#333',
+        fontFamily: 'KulimPark-Regular'
+      },
     input: {
       width: '100%',
       height: 40,
@@ -72,8 +75,10 @@ const styles = StyleSheet.create({
     },
     signupText: {
       marginTop: 20,
-      fontSize: 14,
+      fontSize: 16,
       color: '#555',
+      fontFamily: 'KulimPark-Regular'
+
     },
     signupLink: {
       color: '#007bff',

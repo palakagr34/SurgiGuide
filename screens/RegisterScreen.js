@@ -3,6 +3,7 @@ import { View, Text,TextInput, Button, StyleSheet } from 'react-native';
 import { useState } from 'react';
 
 export default function LoginScreen({ navigation }) {
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
     const [confirm, setConfirm] = useState('');
@@ -17,7 +18,15 @@ export default function LoginScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Sign up</Text>
+      <Text style={styles.title}>Welcome to SurgiGuide!</Text>
+      <Text style={styles.subtitle}>Create a free account!</Text>
+      <TextInput 
+        style={styles.input}
+        placeholder="name"
+        placeholderTextColor="#aaa"
+        value={name}
+        onChangeText={setName}
+      />
       <TextInput 
         style={styles.input}
         placeholder="email"
@@ -45,6 +54,14 @@ export default function LoginScreen({ navigation }) {
       />
       <Button title="Sign up" onPress={handleRegister} />
       
+      
+      <Text style={styles.signupText}>
+              Already have an account?{' '}
+              <Text style={styles.signupLink} onPress={() => navigation.navigate('Login')}>
+                Login
+              </Text>
+            </Text>
+      
 
     </View>
   );
@@ -60,10 +77,16 @@ const styles = StyleSheet.create({
     },
     title: {
       fontSize: 24,
-      fontWeight: 'bold',
       marginBottom: 20,
       color: '#333',
+      fontFamily: 'KulimPark-Bold'
     },
+    subtitle: {
+        fontSize: 20,
+        marginBottom: 20,
+        color: '#333',
+        fontFamily: 'KulimPark-Regular'
+      },
     input: {
       width: '100%',
       height: 40,
