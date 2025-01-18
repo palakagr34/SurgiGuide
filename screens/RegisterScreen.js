@@ -1,6 +1,8 @@
 import React from 'react';
-import { View, Text,TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text,TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useState } from 'react';
+import { signUp } from '../firebaseAuth'; // Import the signUp function
+
 
 export default function LoginScreen({ navigation }) {
     const [name, setName] = useState('');
@@ -8,13 +10,20 @@ export default function LoginScreen({ navigation }) {
     const [pwd, setPwd] = useState('');
     const [confirm, setConfirm] = useState('');
 
-    const handleRegister = () => {
+    const handleRegister = async () => {
         if (pwd === confirm) {
-            console.log('Register with: ', email, pwd);
-            navigation.navigate('Home');
+            try {
+                await signUp(email, pwd); // Assuming the `pwd` variable holds the password
+                Alert.alert("Registration Successful!");
+                navigation.navigate('Login'); // Navigate back to login screen after signup
+            } catch (error) {
+                Alert.alert("Registration Failed", error.message);
+            }
+        } else {
+            Alert.alert("Error", "Passwords do not match. Please try again.");
         }
-        
-    }
+    };
+    
 
   return (
     <View style={styles.container}>

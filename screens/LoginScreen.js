@@ -1,14 +1,21 @@
 import React from 'react';
-import { View, Text,TextInput, Button, StyleSheet } from 'react-native';
+import { View, Text,TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useState } from 'react';
+import { login } from '../firebaseAuth'; // Import the login function
+
 
 export default function LoginScreen({ navigation }) {
     const [email, setEmail] = useState('');
     const [pwd, setPwd] = useState('');
 
-    const handleLogin = () => {
-        console.log('Logging in with: ', email, pwd);
-        navigation.navigate('Home');
+    const handleLogin = async () => {
+        try {
+            await login(email, pwd);
+            Alert.alert("Login Successful!");
+            navigation.navigate('Home'); // Navigate to the home screen after login
+        } catch (error) {
+            Alert.alert("Login Failed", error.message);
+        }
     }
 
   return (
@@ -33,9 +40,6 @@ export default function LoginScreen({ navigation }) {
         secureTextEntry
       />
       <Button title="Login" onPress={handleLogin} />
-
-      
-      
 
     </View>
   );
