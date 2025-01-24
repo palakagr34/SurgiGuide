@@ -11,6 +11,7 @@ import WelcomeScreen from './screens/WelcomeScreen';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen';
+import UserIcon from './components/UserIcon';
 
 
 const Stack = createNativeStackNavigator();
@@ -49,7 +50,7 @@ export default function AppContent() {
       <NavigationContainer>
         <Stack.Navigator>
           {user ? (
-            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="Home" component={HomeScreen} options={{headerRight: () => <UserIcon />}}/>
           ) : (
             <>
               <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false}} />

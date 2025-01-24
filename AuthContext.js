@@ -1,3 +1,4 @@
+// Functions and variables in this file are available globally
 import React, { createContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebaseConfig';
