@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text,TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useState } from 'react';
 import { login } from '../firebaseAuth'; // Import the login function
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 export default function LoginScreen({ navigation }) {
@@ -10,9 +12,17 @@ export default function LoginScreen({ navigation }) {
 
     const handleLogin = async () => {
         try {
-            await login(email, pwd);
-            Alert.alert("Login Successful!");
-            navigation.navigate('Home'); // Navigate to the home screen after login
+            const userCredential = await login(email, pwd);
+            const user = userCredential.user;
+            await AsyncStorage.setItem('userToken', user.uid);
+
+            navigation.reset({  // so user cannot click back to get to login/register page
+                index: 0,
+                routes: [{ name: 'Home' }],
+            });
+
+            Alert.alert("Login Successful!"); 
+
         } catch (error) {
             Alert.alert("Login Failed", error.message);
         }

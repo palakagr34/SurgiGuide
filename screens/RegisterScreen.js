@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text,TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useState } from 'react';
 import { signUp } from '../firebaseAuth'; // Import the signUp function
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 export default function LoginScreen({ navigation }) {
@@ -10,12 +12,23 @@ export default function LoginScreen({ navigation }) {
     const [pwd, setPwd] = useState('');
     const [confirm, setConfirm] = useState('');
 
+
     const handleRegister = async () => {
         if (pwd === confirm) {
             try {
-                await signUp(email, pwd); // Assuming the `pwd` variable holds the password
+                // Register the user
+                const userCredential = await signUp(email, pwd);
+
+                const user = userCredential.user;
+                await AsyncStorage.setItem('userToken', user.uid);
+                setIsLoggedIn(true);
+
                 Alert.alert("Registration Successful!");
-                navigation.navigate('Login'); // Navigate back to login screen after signup
+                
+                navigation.reset({  // so user cannot click back to get to login/register page
+                    index: 0,
+                    routes: [{ name: 'Home' }],
+                });
             } catch (error) {
                 Alert.alert("Registration Failed", error.message);
             }
@@ -23,6 +36,7 @@ export default function LoginScreen({ navigation }) {
             Alert.alert("Error", "Passwords do not match. Please try again.");
         }
     };
+    
     
 
   return (
