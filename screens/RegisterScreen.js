@@ -21,7 +21,6 @@ export default function LoginScreen({ navigation }) {
 
                 const user = userCredential.user;
                 await AsyncStorage.setItem('userToken', user.uid);
-                setIsLoggedIn(true);
 
                 Alert.alert("Registration Successful!");
                 
