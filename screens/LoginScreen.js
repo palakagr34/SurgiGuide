@@ -18,7 +18,7 @@ export default function LoginScreen({ navigation }) {
 
             navigation.reset({  // so user cannot click back to get to login/register page
                 index: 0,
-                routes: [{ name: 'Home' }],
+                routes: [{ name: 'MainApp' }],
             });
 
             Alert.alert("Login Successful!"); 

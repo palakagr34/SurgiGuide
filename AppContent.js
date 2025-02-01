@@ -29,8 +29,8 @@ const Tab = createBottomTabNavigator();
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
+        initialRouteName="Home"
         screenOptions={({ route }) => ({
-          
           tabBarActiveTintColor: "blue",
           tabBarInactiveTintColor: "gray",
           tabBarStyle: { height: 60, paddingBottom: 10 }, // Adjust styling
@@ -50,7 +50,7 @@ const StackNavigator = ({ user }) => {
     <Stack.Navigator>
       {user ? (
         <>
-          <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false}}/>
+          <Stack.Screen name="MainApp" component={BottomTabNavigator} options={{ headerShown: false}}/>
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
         </>
       ) : (
