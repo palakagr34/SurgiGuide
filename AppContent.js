@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useContext, useState, useEffect } from 'react';
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Font from 'expo-font';
@@ -16,9 +17,57 @@ import SpecialtiesScreen from './screens/SpecialtiesScreen';
 import SubSpecialtiesScreen from './screens/SubSpecialtiesScreen';
 import ProceduresScreen from './screens/ProceduresScreen';
 import SetProcedureScreen from './screens/SetProcedureScreen';
-
+import ChatbotScreen from './screens/ChatbotScreen';
+import NotesScreen from './screens/NotesScreen';
+import CalendarScreen from './screens/CalendarScreen';
+import SettingsScreen from './screens/SettingsScreen';
 
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
+
+
+const BottomTabNavigator = () => {
+  return (
+    <Tab.Navigator
+        screenOptions={({ route }) => ({
+          
+          tabBarActiveTintColor: "blue",
+          tabBarInactiveTintColor: "gray",
+          tabBarStyle: { height: 60, paddingBottom: 10 }, // Adjust styling
+        })}
+      >
+      <Tab.Screen name="Chatbot" component={ChatbotScreen} options={{headerRight: () => <UserIcon />}} />
+      <Tab.Screen name="Notes" component={NotesScreen} options={{headerRight: () => <UserIcon />}} />
+      <Tab.Screen name="Home" component={HomeScreen} options={{headerRight: () => <UserIcon />}} />
+      <Tab.Screen name="Calendar" component={CalendarScreen} options={{headerRight: () => <UserIcon />}} />
+      <Tab.Screen name="Settings" component={SettingsScreen} options={{headerRight: () => <UserIcon />}} />
+    </Tab.Navigator>
+  );
+};
+
+const StackNavigator = ({ user }) => {
+  return (
+    <Stack.Navigator>
+      {user ? (
+        <>
+          <Stack.Screen name="Home" component={BottomTabNavigator} options={{ headerShown: false}}/>
+          <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
+        </>
+      ) : (
+        <>
+          <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false}} />
+          <Stack.Screen name = "Login" component = {LoginScreen}/>
+          <Stack.Screen name="Register" component = {RegisterScreen} />
+          <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
+          <Stack.Screen name="Subspecialties" component={SubSpecialtiesScreen} />
+          <Stack.Screen name="Procedures" component={ProceduresScreen} />
+          <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
+        </>
+      )
+      }
+  </Stack.Navigator>
+  );
+};
 
 export default function AppContent() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -52,25 +101,7 @@ export default function AppContent() {
   return (
     <AuthProvider>
       <NavigationContainer>
-        <Stack.Navigator>
-          {user ? (
-            <>
-              <Stack.Screen name="Home" component={HomeScreen} options={{headerRight: () => <UserIcon />}}/>
-              <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
-            </>
-          ) : (
-            <>
-              <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false}} />
-              <Stack.Screen name = "Login" component = {LoginScreen}/>
-              <Stack.Screen name="Register" component = {RegisterScreen} />
-              <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
-              <Stack.Screen name="Subspecialties" component={SubSpecialtiesScreen} />
-              <Stack.Screen name="Procedures" component={ProceduresScreen} />
-              <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
-            </>
-          )
-          }
-        </Stack.Navigator>
+        <StackNavigator user={user}/>
       </NavigationContainer>
     </AuthProvider>
   );
