@@ -12,6 +12,10 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import UserIcon from './components/UserIcon';
+import SpecialtiesScreen from './screens/SpecialtiesScreen';
+import SubSpecialtiesScreen from './screens/SubSpecialtiesScreen';
+import ProceduresScreen from './screens/ProceduresScreen';
+import SetProcedureScreen from './screens/SetProcedureScreen';
 
 
 const Stack = createNativeStackNavigator();
@@ -50,12 +54,19 @@ export default function AppContent() {
       <NavigationContainer>
         <Stack.Navigator>
           {user ? (
-            <Stack.Screen name="Home" component={HomeScreen} options={{headerRight: () => <UserIcon />}}/>
+            <>
+              <Stack.Screen name="Home" component={HomeScreen} options={{headerRight: () => <UserIcon />}}/>
+              <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
+            </>
           ) : (
             <>
               <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false}} />
               <Stack.Screen name = "Login" component = {LoginScreen}/>
               <Stack.Screen name="Register" component = {RegisterScreen} />
+              <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
+              <Stack.Screen name="Subspecialties" component={SubSpecialtiesScreen} />
+              <Stack.Screen name="Procedures" component={ProceduresScreen} />
+              <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
             </>
           )
           }

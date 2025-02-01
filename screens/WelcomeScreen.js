@@ -10,7 +10,7 @@ export default function WelcomeScreen({ navigation }) {
             <Text style={styles.subtitle}>Your surgery guide!</Text>
             <Button title="Login or Sign up" onPress={()=> navigation.navigate('Register')} />
             <Text style={styles.subtitle}>SurgiGuide</Text>
-            <Button title="Find a Procedure" onPress={()=>console.warn('search screen')} />
+            <Button title="Find a Procedure" onPress={()=>navigation.navigate('Specialties')} /> 
         </View>
     </ImageBackground>
   );
