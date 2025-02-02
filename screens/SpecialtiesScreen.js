@@ -8,7 +8,7 @@ export default function SpecialtiesScreen({ navigation }) {
     return(
         <View>
             <Text>Specialties Screen</Text>
-            <Button title="click" onPress={() => navigation.navigate('Subspecialties')} />
+            <Button title="click" onPress={() => navigation.navigate('Procedures')} />
         </View>
     )
 }

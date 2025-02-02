@@ -14,7 +14,6 @@ import HomeScreen from './screens/HomeScreen';
 import RegisterScreen from './screens/RegisterScreen';
 import UserIcon from './components/UserIcon';
 import SpecialtiesScreen from './screens/SpecialtiesScreen';
-import SubSpecialtiesScreen from './screens/SubSpecialtiesScreen';
 import ProceduresScreen from './screens/ProceduresScreen';
 import SetProcedureScreen from './screens/SetProcedureScreen';
 import ChatbotScreen from './screens/ChatbotScreen';
@@ -59,7 +58,6 @@ const StackNavigator = ({ user }) => {
           <Stack.Screen name = "Login" component = {LoginScreen}/>
           <Stack.Screen name="Register" component = {RegisterScreen} />
           <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
-          <Stack.Screen name="Subspecialties" component={SubSpecialtiesScreen} />
           <Stack.Screen name="Procedures" component={ProceduresScreen} />
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
         </>
