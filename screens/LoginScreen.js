@@ -1,6 +1,8 @@
 import React from 'react';
 import { View, Text,TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useState } from 'react';
+import { db } from '../firebaseConfig'; 
+import { doc } from "firebase/firestore";
 import { login } from '../firebaseAuth'; // Import the login function
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -16,9 +18,17 @@ export default function LoginScreen({ navigation }) {
             const user = userCredential.user;
             await AsyncStorage.setItem('userToken', user.uid);
 
+            const userRef = doc(db, "users", user.uid);
+            const docSnap = await getDoc(userRef);
+
+            if(docSnap.exists()){
+              const selectedProcedure = docSnap.data().selectedProcedure;
+              console.log("Selected Procedure:", selectedProcedure);
+            }
+
             navigation.reset({  // so user cannot click back to get to login/register page
                 index: 0,
-                routes: [{ name: 'MainApp' }],
+                routes: [{ name: 'MainApp', params: {procedure: selectedProcedure} }],
             });
 
             Alert.alert("Login Successful!"); 

@@ -2,6 +2,8 @@ import React from 'react';
 import { View, Text,TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useState } from 'react';
 import { signUp } from '../firebaseAuth'; // Import the signUp function
+import { doc, setDoc } from "firebase/firestore"; 
+import { db } from '../firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
@@ -14,26 +16,40 @@ export default function RegisterScreen({ navigation }) {
 
 
     const handleRegister = async () => {
-        if (pwd === confirm) {
-            try {
-                // Register the user
-                const userCredential = await signUp(email, pwd);
+      if (pwd === confirm) {
+        try {
+          // Register the user
+          const userCredential = await signUp(email, pwd);
+          const user = userCredential.user;
 
-                const user = userCredential.user;
-                await AsyncStorage.setItem('userToken', user.uid);
+          await AsyncStorage.setItem('userToken', user.uid);
+          
 
-                Alert.alert("Registration Successful!");
-                
-                navigation.reset({  // so user cannot click back to get to login/register page
-                    index: 0,
-                    routes: [{ name: 'MainApp' }],
-                });
-            } catch (error) {
-                Alert.alert("Registration Failed", error.message);
-            }
-        } else {
-            Alert.alert("Error", "Passwords do not match. Please try again.");
+          const userRef = doc(db, "users", user.uid);
+          await setDoc(userRef, {
+            name: name, 
+            email: email,
+            preferences: {
+              theme: 'light', 
+              notifications: true
+            }, 
+            selectedProcedure: '62220', 
+            favoriteProcedures: [], 
+            recentSearches: []
+          });
+          Alert.alert("Registration Successful!");
+
+          
+          navigation.reset({  // so user cannot click back to get to login/register page
+            index: 0,
+            routes: [{ name: 'MainApp' }],
+          });
+        } catch (error) {
+            Alert.alert("Registration Failed", error.message);
         }
+      } else {
+          Alert.alert("Error", "Passwords do not match. Please try again.");
+      }
     };
     
     
