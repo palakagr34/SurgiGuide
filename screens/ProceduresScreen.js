@@ -1,13 +1,71 @@
 // Page to search for specific procedure filtered by specialty and subspecialty 
-import {React} from 'react';
-import { View, Text } from 'react-native';
+import {React, useEffect, useState} from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { db } from "../firebaseConfig"; // Import Firestore instance
+import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
 
 
+export default function ProceduresScreen({ route, navigation }) {
+    const [procedures, setProcedures] = useState([]);
+    const specialty = route.params;
 
-export default function ProceduresScreen({ navigation }) {
+    useEffect(() => {
+        const fetchProcedures = async () => {
+          try {
+            const q = query(collection(db, "procedures"), where("Specialty", "==", specialty));
+            const querySnapshot = await getDocs(q);
+            const proceduresList = [];
+    
+            querySnapshot.forEach((doc) => {
+              const data = doc.data();
+              if (data["Procedure Type"]){
+                proceduresList.push(data["Procedure Type"]);
+                console.log("Procedure Type:", data["Procedure Type"]);
+              }
+            });
+    
+            setProcedures(proceduresList);
+          } catch (error) {
+            console.error("Error fetching procedures:", error);
+          } finally {
+            setLoading(false);
+          }
+        };
+        fetchProcedures();
+    }, []); // Runs once when the component mounts
+    
     return(
-        <View>
-            <Text>Procedures Screen</Text>
+        <View style={styles.container}>
+            <Text style={styles.title}>{specialty} Procedures</Text>
+            <FlatList
+                data={procedures}
+                keyExtractor={(item, index) => index.toString()}
+                renderItem={({ item }) => (
+                    <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("Home")} >
+                        <Text>{item}</Text>
+                    </TouchableOpacity>
+                )}
+            />
         </View>
     )
 }
+
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      padding: 20,
+      backgroundColor: "#fff",
+    },
+    title: {
+      fontSize: 24,
+      fontWeight: "bold",
+      marginBottom: 20,
+    },
+    item: {
+      fontSize: 18,
+      padding: 10,
+      borderBottomWidth: 1,
+      borderBottomColor: "#ccc",
+    },
+  });

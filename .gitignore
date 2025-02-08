@@ -78,4 +78,4 @@ yarn-error.*
 # @end expo-cli
 
 # files 
-DataUpload/serviceAccountKey.json
+serviceAccountKey.json
