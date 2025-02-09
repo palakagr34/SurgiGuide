@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text,TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { useState } from 'react';
 import { db } from '../firebaseConfig'; 
-import { doc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { login } from '../firebaseAuth'; // Import the login function
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -24,17 +24,24 @@ export default function LoginScreen({ navigation }) {
             if(docSnap.exists()){
               const selectedProcedure = docSnap.data().selectedProcedure;
               console.log("Selected Procedure:", selectedProcedure);
-            }
 
-            navigation.reset({  // so user cannot click back to get to login/register page
-                index: 0,
-                routes: [{ name: 'MainApp', params: {procedure: selectedProcedure} }],
-            });
+              if (selectedProcedure) {
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'MainApp', params: { procedure: selectedProcedure } }],
+                });
+              } else {
+                navigation.reset({
+                  index: 0,
+                  routes: [{ name: 'SpecialtiesScreen' }],
+                });
+              }
+            }
 
             Alert.alert("Login Successful!"); 
 
         } catch (error) {
-            Alert.alert("Login Failed", error.message);
+            console.log("Login Failed", error.message);
         }
     }
 

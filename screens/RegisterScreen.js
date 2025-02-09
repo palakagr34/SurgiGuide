@@ -42,7 +42,7 @@ export default function RegisterScreen({ navigation }) {
           
           navigation.reset({  // so user cannot click back to get to login/register page
             index: 0,
-            routes: [{ name: 'MainApp' }],
+            routes: [{ name: 'MainApp', params: { procedure: '62220' } }],  
           });
         } catch (error) {
             Alert.alert("Registration Failed", error.message);

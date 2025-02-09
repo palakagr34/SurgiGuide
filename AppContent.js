@@ -25,7 +25,8 @@ const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 
-const BottomTabNavigator = () => {
+const BottomTabNavigator = ({route}) => {
+  const procedure = route?.params?.procedure || null;
   return (
     <Tab.Navigator
         initialRouteName="Home"
@@ -37,7 +38,9 @@ const BottomTabNavigator = () => {
       >
       <Tab.Screen name="Chatbot" component={ChatbotScreen} options={{headerRight: () => <UserIcon />}} />
       <Tab.Screen name="Notes" component={NotesScreen} options={{headerRight: () => <UserIcon />}} />
-      <Tab.Screen name="Home" component={HomeScreen} options={{headerRight: () => <UserIcon />}} />
+      <Tab.Screen name="Home" options={{headerRight: () => <UserIcon />}}>
+        {props => <HomeScreen {...props} procedure={procedure} />}
+      </Tab.Screen>
       <Tab.Screen name="Calendar" component={CalendarScreen} options={{headerRight: () => <UserIcon />}} />
       <Tab.Screen name="Settings" component={SettingsScreen} options={{headerRight: () => <UserIcon />}} />
     </Tab.Navigator>
