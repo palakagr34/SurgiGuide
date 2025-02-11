@@ -40,10 +40,11 @@ export default function RegisterScreen({ navigation }) {
           Alert.alert("Registration Successful!");
 
           
-          navigation.reset({  // so user cannot click back to get to login/register page
+          navigation.reset({
             index: 0,
-            routes: [{ name: 'MainApp', params: { procedure: '62220' } }],  
+            routes: [{ name: 'SpecialtiesScreen' }],
           });
+          
         } catch (error) {
             Alert.alert("Registration Failed", error.message);
         }
