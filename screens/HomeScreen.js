@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { AuthContext, useAuth } from '../AuthContext';
-import { logout } from '../firebaseAuth'
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebaseConfig';
 
@@ -31,15 +30,6 @@ export default function HomeScreen({ route, navigation, procedure }) {
         }
     }
 
-    const handleLogout = async () => {
-        try {
-            await logout();
-            console.log("Successfully logged out");
-        } catch (error) {
-            console.error("Error logging out: ", error.message);
-        }
-    };
-
     return (
         <View style={styles.container}>
             {procedureData ? (
@@ -68,7 +58,6 @@ export default function HomeScreen({ route, navigation, procedure }) {
             ): (
                 <Text>Loading...</Text>
             )}
-            <Button title="Log Out" onPress={handleLogout} />
         </View>
     );
 }
