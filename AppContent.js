@@ -20,6 +20,7 @@ import ChatbotScreen from './screens/ChatbotScreen';
 import NotesScreen from './screens/NotesScreen';
 import CalendarScreen from './screens/CalendarScreen';
 import SettingsScreen from './screens/SettingsScreen';
+import HistoryScreen from './screens/HistoryScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -42,7 +43,7 @@ const BottomTabNavigator = ({route}) => {
         {props => <HomeScreen {...props} procedure={procedure} />}
       </Tab.Screen>
       <Tab.Screen name="Calendar" component={CalendarScreen} options={{headerRight: () => <UserIcon />}} />
-      <Tab.Screen name="Settings" component={SettingsScreen} options={{headerRight: () => <UserIcon />}} />
+      <Tab.Screen name="History" component={HistoryScreen} options={{headerRight: () => <UserIcon />}} />
     </Tab.Navigator>
   );
 };
@@ -54,6 +55,7 @@ const StackNavigator = ({ user }) => {
         <>
           <Stack.Screen name="MainApp" component={BottomTabNavigator} options={{ headerShown: false}}/>
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
+          <Stack.Screen name="Settings" component={SettingsScreen} options={{headerRight: () => <UserIcon />}} />
         </>
       ) : (
         <>
