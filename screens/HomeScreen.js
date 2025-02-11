@@ -1,14 +1,25 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { use, useContext, useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { AuthContext, useAuth } from '../AuthContext';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HomeScreen({ route, navigation, procedure }) {
     const {signOutUser} = useContext(AuthContext);
-    const selectedProcedure = route?.params?.procedure || procedure || null;
     const [procedureData, setProcedureData] = useState(null);
-    
+    const [storedProcedure, setStoredProcedure] = useState(null);
+
+    useEffect(() => {
+        const fetchStoredProcedure = async () => {
+            const storedProcedure = await AsyncStorage.getItem('selectedProcedure');
+            setStoredProcedure(storedProcedure);
+        }
+        fetchStoredProcedure();
+    }, []);
+
+    const selectedProcedure = route?.params?.procedure || procedure || storedProcedure || null;
+        
     useEffect(() => {
         if (selectedProcedure) {
           console.log('Selected Procedure (Home):', procedure);   
