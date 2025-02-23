@@ -6,6 +6,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Font from 'expo-font';
+import { KeyboardAvoidingView, Platform, TouchableWithoutFeedback, Keyboard } from 'react-native';
+
 
 import { AuthProvider, AuthContext } from './AuthContext';
 import WelcomeScreen from './screens/WelcomeScreen';
@@ -106,7 +108,11 @@ export default function AppContent() {
   return (
     <AuthProvider>
       <NavigationContainer>
-        <StackNavigator user={user}/>
+        <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }} >
+            <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+              <StackNavigator user={user}/>
+            </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       </NavigationContainer>
     </AuthProvider>
   );

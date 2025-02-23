@@ -1,9 +1,10 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, Keyboard, TouchableWithoutFeedback, Platform, ScrollView} from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function DatePickerScreen({ route, navigation }) {
     const { type } = route.params;
@@ -36,8 +37,7 @@ export default function DatePickerScreen({ route, navigation }) {
 
 
     return (
-        <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-            <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.container}>
                 <Text style={styles.title}>Add {type === 'surgery' ? 'Surgery' : 'Follow Up'} Date</Text>
                 <Calendar
                     onDayPress={onDayPress}
@@ -49,6 +49,7 @@ export default function DatePickerScreen({ route, navigation }) {
                         todayTextColor: 'blue',
                         arrowColor: 'blue',
                     }}
+                    style={styles.calendar}
                 />
                 <TextInput
                     style={styles.input}
@@ -64,16 +65,17 @@ export default function DatePickerScreen({ route, navigation }) {
                     value={notes}
                     onChangeText={setNotes}
                     multiline
+                    returnKeyType="done"
+                    onSubmitEditing={()=>Keyboard.dismiss()}
                 />
                 <Button title="Save" onPress={handleSave} />
-            </View>
-        </TouchableWithoutFeedback>
+        </ScrollView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         padding: 20,
         backgroundColor: '#fff',
     },
