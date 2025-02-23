@@ -23,6 +23,7 @@ export default function RegisterScreen({ navigation }) {
           const user = userCredential.user;
 
           await AsyncStorage.setItem('userToken', user.uid);
+          await AsyncStorage.setItem('userName', name);
           
 
           const userRef = doc(db, "users", user.uid);
@@ -35,7 +36,14 @@ export default function RegisterScreen({ navigation }) {
             }, 
             selectedProcedure: '62220', 
             favoriteProcedures: [], 
-            recentSearches: []
+            recentSearches: [], 
+            procedures: [{
+              type: 'surgery',
+              date: '2022-12-31',
+              name: 'Knee Replacement',
+              notes: 'temp notes'
+            }], 
+            notes:''
           });
           Alert.alert("Registration Successful!");
 
@@ -44,7 +52,7 @@ export default function RegisterScreen({ navigation }) {
             index: 0,
             routes: [{ name: 'SpecialtiesScreen' }],
           });
-          
+
         } catch (error) {
             Alert.alert("Registration Failed", error.message);
         }

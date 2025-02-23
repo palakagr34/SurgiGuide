@@ -1,13 +1,46 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, TextInput, StyleSheet, Button, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import { doc, updateDoc, getDoc } from 'firebase/firestore';
+import { db } from '../firebaseConfig';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function NotesScreen() {
-    const [note, setNote] = useState('');
+    const [text, setText] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    const handleSave = (text) => {
-        // Handle save action (e.g., save to storage or backend)
-        console.log('Note saved:', note);
-        setNote(text);
+    useEffect(() => {
+        const fetchNotes = async () => {
+            setLoading(true);
+            const userToken = await AsyncStorage.getItem('userToken');
+            const userRef = doc(db, 'users', userToken);
+            const userDoc = await getDoc(userRef);
+
+            if (userDoc.exists()) {
+                const notes = userDoc.data().notes || '';
+                setText(notes);
+            }
+            setLoading(false);
+        };
+
+        fetchNotes();
+    }, []);
+
+    const handleSave = async () => {
+        console.log("handling save");
+        setLoading(true);
+        try {
+            const userToken = await AsyncStorage.getItem('userToken');
+            const userRef = doc(db, 'users', userToken);
+            await updateDoc(userRef, {
+                notes: text
+            });
+            console.log('Success: Notes updated successfully');
+        } catch (error) {
+            console.log('Error: Failed to update notes');
+        } finally {
+            setLoading(false);
+        }
     };
 
     const dismissKeyboard = () => {
@@ -17,13 +50,15 @@ export default function NotesScreen() {
     return (
         <TouchableWithoutFeedback onPress={dismissKeyboard}>
             <View style={styles.container}>
-                <TextInput
+                <TextInput  
                     style={styles.textInput}
                     multiline
                     placeholder="Type your notes here..."
-                    value={note}
-                    onChangeText={handleSave}
+                    value={text}
+                    onChangeText={setText}
                 />
+                <Button title="Save Notes" onPress={handleSave} disabled={loading} />
+
             </View>
         </TouchableWithoutFeedback>
     );

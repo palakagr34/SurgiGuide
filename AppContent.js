@@ -21,6 +21,7 @@ import NotesScreen from './screens/NotesScreen';
 import CalendarScreen from './screens/CalendarScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import HistoryScreen from './screens/HistoryScreen';
+import DatePickerScreen from './screens/DatePickerScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -56,6 +57,7 @@ const StackNavigator = ({ user }) => {
           <Stack.Screen name="MainApp" component={BottomTabNavigator} options={{ headerShown: false}}/>
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} options={{headerRight: () => <UserIcon />}} />
+          <Stack.Screen name="DatePicker" component={DatePickerScreen} options={{headerRight: () => <UserIcon />}}/>
         </>
       ) : (
         <>
