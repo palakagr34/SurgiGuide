@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import { View, Text, StyleSheet, TextInput, Button, Keyboard, TouchableWithoutFeedback, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, Button, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { doc, updateDoc, arrayUnion } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
@@ -36,11 +36,8 @@ export default function DatePickerScreen({ route, navigation }) {
 
 
     return (
-        <KeyboardAvoidingView 
-            behavior={Platform.OS === 'ios' ? 'padding' : 'height'} 
-            style={{flex: 1}} > 
         <TouchableWithoutFeedback onPress={()=>Keyboard.dismiss()}>
-            <ScrollView  contentContainerStyle={styles.container}>
+            <View style={styles.container}>
                 <Text style={styles.title}>Add {type === 'surgery' ? 'Surgery' : 'Follow Up'} Date</Text>
                 <Calendar
                     onDayPress={onDayPress}
@@ -69,15 +66,14 @@ export default function DatePickerScreen({ route, navigation }) {
                     multiline
                 />
                 <Button title="Save" onPress={handleSave} />
-            </ScrollView>
+            </View>
         </TouchableWithoutFeedback>
-        </KeyboardAvoidingView>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flexGrow: 1,
+        flex: 1,
         padding: 20,
         backgroundColor: '#fff',
     },
