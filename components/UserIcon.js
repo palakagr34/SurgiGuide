@@ -3,10 +3,9 @@ import { TouchableOpacity, Text, StyleSheet, View, Button, TouchableWithoutFeedb
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../AuthContext';
-import { logout } from '../firebaseAuth';
 
 export default function UserIcon(){
-    const { user } = useContext(AuthContext);
+    const { user, signOutUser } = useContext(AuthContext);
     const [dropdownVisible, setDropdownVisible] = useState(false);
     const [userName, setUserName] = useState('');
     const navigation = useNavigation();
@@ -27,13 +26,22 @@ export default function UserIcon(){
         console.log("User icon clicked");
         setDropdownVisible(!dropdownVisible);
     };
+
     const handleLogout = async () => {
         try {
-            await logout();
+            await signOutUser();
+            await AsyncStorage.clear();
             console.log("Successfully logged out");
+
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Welcome' }],
+            });
+
         } catch (error) {
             console.error("Error logging out: ", error.message);
         }
+        
     }
     const handleOutsidePress = () => {
       console.log("outside press")

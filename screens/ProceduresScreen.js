@@ -2,7 +2,8 @@
 import {React, useEffect, useState} from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
 import { db } from "../firebaseConfig"; // Import Firestore instance
-import { getFirestore, collection, getDocs, query, where } from "firebase/firestore";
+import { getFirestore, collection, doc, updateDoc, getDocs, query, where } from "firebase/firestore";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function ProceduresScreen({ route, navigation }) {
@@ -33,6 +34,23 @@ export default function ProceduresScreen({ route, navigation }) {
         };
         fetchProcedures();
     }, []); // Runs once when the component mounts
+
+    const handleSelection = async (procedure) => {
+        console.log("handling save");
+        try {
+            const userToken = await AsyncStorage.getItem('userToken');
+            const userRef = doc(db, 'users', userToken);
+            await updateDoc(userRef, {
+                selectedProcedure: procedure
+            });
+            await AsyncStorage.setItem('selectedProcedure', procedure);
+            console.log('set procedure w/ async:', procedure);
+        } catch (error) {
+            console.log('Error: ', error);
+        } 
+
+        navigation.navigate("MainApp");
+    }
     
     return(
         <View style={styles.container}>
@@ -41,7 +59,7 @@ export default function ProceduresScreen({ route, navigation }) {
                 data={procedures}
                 keyExtractor={(item, index) => index.toString()}
                 renderItem={({ item }) => (
-                    <TouchableOpacity style={styles.item} onPress={() => navigation.navigate("Home")} >
+                    <TouchableOpacity style={styles.item} onPress={() => handleSelection(item)} >
                         <Text>{item}</Text>
                     </TouchableOpacity>
                 )}

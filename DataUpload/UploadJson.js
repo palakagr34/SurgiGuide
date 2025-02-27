@@ -12,22 +12,36 @@ admin.initializeApp({
 const db = admin.firestore();
 const procedures = require("./procedures.json");
 
+async function clearCollection(collectionRef) {
+  const snapshot = await collectionRef.get();
+  const batch = db.batch();
+  snapshot.docs.forEach(doc => {
+      batch.delete(doc.ref);
+  });
+  await batch.commit();
+}
+
 async function uploadData(){
+    const proceduresCollectionRef = db.collection("procedures");
+
+    // Clear existing documents in collection
+    await clearCollection(proceduresCollectionRef); 
+
     procedures.forEach(async (procedure) => {
-        let cptCode = procedure["CPT Code"];
+        let procedureName = procedure["Procedure Type"];
       
-        if (!cptCode || cptCode === "NaN" || cptCode === "null" || cptCode === undefined) {
+        if (!procedureName || procedureName === "NaN" || procedureName === "null" || procedureName === undefined) {
           console.error("Skipping entry due to missing or invalid CPT Code:", procedure);
           return;
         }
       
-        cptCode = cptCode.toString().trim(); // Convert to string and remove whitespace
+        procedureName = procedureName.toString().trim(); // Convert to string and remove whitespace
       
         try {
-          await db.collection("procedures").doc(cptCode).set(procedure);
-          console.log(`Uploaded procedure: ${cptCode}`);
+          await db.collection("procedures").doc(procedureName).set(procedure);
+          console.log(`Uploaded procedure: ${procedureName}`);
         } catch (error) {
-          console.error(`Error uploading CPT Code ${cptCode}:`, error);
+          console.error(`Error uploading CPT Code ${procedureName}:`, error);
         }
     });
       

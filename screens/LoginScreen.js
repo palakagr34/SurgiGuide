@@ -24,7 +24,7 @@ export default function LoginScreen({ navigation }) {
             if(docSnap.exists()){
               const userName = docSnap.data().name || docSnap.data().email;
               await AsyncStorage.setItem('userName', userName);
-
+              
               const selectedProcedure = docSnap.data().selectedProcedure;
               console.log("Selected Procedure:", selectedProcedure);
 
@@ -37,7 +37,7 @@ export default function LoginScreen({ navigation }) {
               } else {
                 navigation.reset({
                   index: 0,
-                  routes: [{ name: 'SpecialtiesScreen' }],
+                  routes: [{ name: 'Specialties' }],
                 });
               }
             }

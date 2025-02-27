@@ -6,14 +6,15 @@ import { db } from '../firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function HomeScreen({ route, navigation, procedure }) {
-    const {signOutUser} = useContext(AuthContext);
     const [procedureData, setProcedureData] = useState(null);
     const [storedProcedure, setStoredProcedure] = useState(null);
 
     useEffect(() => {
+        console.log("Fetching stored procedure");
         const fetchStoredProcedure = async () => {
             const storedProcedure = await AsyncStorage.getItem('selectedProcedure');
             setStoredProcedure(storedProcedure);
+            console.log("Stored Procedure:", storedProcedure);
         }
         fetchStoredProcedure();
     }, []);
@@ -22,7 +23,7 @@ export default function HomeScreen({ route, navigation, procedure }) {
         
     useEffect(() => {
         if (selectedProcedure) {
-          console.log('Selected Procedure (Home):', procedure);   
+          console.log('Selected Procedure (Home):', selectedProcedure);   
           fetchProcedureData(selectedProcedure);      
         }
     }, [selectedProcedure]);

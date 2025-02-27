@@ -51,11 +51,14 @@ const BottomTabNavigator = ({route}) => {
   );
 };
 
-const StackNavigator = ({ user }) => {
+const StackNavigator = ({ params }) => {
+  console.log("User (StackNavigator):", params.user);
   return (
     <Stack.Navigator>
-      {user ? (
+      {params.user ? (
         <>
+          <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
+          <Stack.Screen name="Procedures" component={ProceduresScreen} />
           <Stack.Screen name="MainApp" component={BottomTabNavigator} options={{ headerShown: false}}/>
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} options={{headerRight: () => <UserIcon />}} />
@@ -64,7 +67,7 @@ const StackNavigator = ({ user }) => {
       ) : (
         <>
           <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false}} />
-          <Stack.Screen name = "Login" component = {LoginScreen}/>
+          <Stack.Screen name ="Login" component = {LoginScreen}/>
           <Stack.Screen name="Register" component = {RegisterScreen} />
           <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
           <Stack.Screen name="Procedures" component={ProceduresScreen} />
@@ -78,7 +81,7 @@ const StackNavigator = ({ user }) => {
 
 export default function AppContent() {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const { user, isLoading } = useContext(AuthContext);
+  const { user, isLoading, signOutUser } = useContext(AuthContext);
 
   console.warn('Stop 1');
 
@@ -104,17 +107,16 @@ export default function AppContent() {
     );
   }
   
-
+  console.log("User (AppContent):", user);
+  console.log("SignOutUser (AppContent):", signOutUser);
   return (
-    <AuthProvider>
       <NavigationContainer>
         <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : 'height'} style={{ flex: 1 }} >
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-              <StackNavigator user={user}/>
+              <StackNavigator params={{user, signOutUser}}/>
             </TouchableWithoutFeedback>
         </KeyboardAvoidingView>
       </NavigationContainer>
-    </AuthProvider>
   );
 }
 

@@ -34,14 +34,14 @@ export default function RegisterScreen({ navigation }) {
               theme: 'light', 
               notifications: true
             }, 
-            selectedProcedure: '62220', 
+            selectedProcedure: '', 
             favoriteProcedures: [], 
             recentSearches: [], 
             procedures: [{
-              type: 'surgery',
-              date: '2022-12-31',
-              name: 'Knee Replacement',
-              notes: 'temp notes'
+              type: '',
+              date: '',
+              name: '',
+              notes: ''
             }], 
             notes:''
           });
@@ -50,7 +50,7 @@ export default function RegisterScreen({ navigation }) {
           
           navigation.reset({
             index: 0,
-            routes: [{ name: 'SpecialtiesScreen' }],
+            routes: [{ name: 'Specialties' }],
           });
 
         } catch (error) {
