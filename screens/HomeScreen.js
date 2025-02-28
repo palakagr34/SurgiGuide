@@ -46,26 +46,29 @@ export default function HomeScreen({ route, navigation, procedure }) {
         <View style={styles.container}>
             {procedureData ? (
                 <>
-                    <Text style={styles.title}>{procedureData["Procedure Type"]}</Text>
-                    <ScrollView horizontal style={styles.timeline}>
-                        <TouchableOpacity style={styles.timelineItem}>
-                            <Text>Day Before Surgery</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.timelineItem}>
-                            <Text>Morning of Surgery</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.timelineItem}>
-                            <Text>Day After Surgery</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.timelineItem}>
-                            <Text>Day of Discharge</Text>
-                        </TouchableOpacity>
+                    <Text style={styles.title}>{procedureData["Procedure Name"]}</Text>
+
+                    <ScrollView horizontal contentContainerStyle={styles.timeline}>
+                        {[
+                            { title: "Day Before Surgery" },
+                            { title: "Morning of Surgery" },
+                            { title: "Day After Surgery " },
+                            { title: "Day of Discharge" },
+                        ].map((item, index) => (
+                            <TouchableOpacity
+                                key={index}
+                                style={styles.timelineItem}
+                                onPress={() => navigation.navigate('Timeline', { title: item.title })}
+                            >
+                                <Text style={styles.timelineText}>{item.title}</Text>
+                            </TouchableOpacity>
+                        ))}
                     </ScrollView>
-                    <View style={styles.buttonRow}>
-                        <Button title="Pre-Surgery" />
-                        <Button title="Post-Surgery" />
-                    </View>
-                    <Button title="General Info" />
+
+                    
+                    <Button title="Pre-Surgery" />
+                    <Button title="Post-Surgery" />        
+                    <Button title="General Info" onPress={()=> navigation.navigate('GenInfo')} />
                 </>
             ): (
                 <Text>Loading...</Text>
@@ -89,19 +92,32 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     timeline: {
-        flexDirection: 'row',
-        marginBottom: 20,
+        flexDirection: "row",
+        paddingVertical: 10,
+        paddingHorizontal: 5,
+        height: 100,
     },
     timelineItem: {
-        padding: 10,
-        marginHorizontal: 5,
-        backgroundColor: '#f0f0f0',
-        borderRadius: 5,
+        backgroundColor: "#007bff", // Primary blue color
+        paddingVertical: 8,
+        paddingHorizontal: 12,
+        borderRadius: 15, // Rounded buttons
+        marginHorizontal: 6, // Space between buttons
+        elevation: 3, // Shadow on Android
+        shadowColor: "#000", // Shadow on iOS
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
+    },
+    timelineText: {
+        color: "#fff", // White text
+        fontWeight: "bold",
+        textAlign: "center",
     },
     buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         width: '100%',
-        marginBottom: 20,
+        marginTop: 10,
     },
 });

@@ -19,9 +19,9 @@ export default function ProceduresScreen({ route, navigation }) {
     
             querySnapshot.forEach((doc) => {
               const data = doc.data();
-              if (data["Procedure Type"]){
-                proceduresList.push(data["Procedure Type"]);
-                console.log("Procedure Type:", data["Procedure Type"]);
+              if (data["Procedure Name"]){
+                proceduresList.push(data["Procedure Name"]);
+                console.log("Procedure Name:", data["Procedure Name"]);
               }
             });
     
@@ -36,20 +36,28 @@ export default function ProceduresScreen({ route, navigation }) {
     }, []); // Runs once when the component mounts
 
     const handleSelection = async (procedure) => {
-        console.log("handling save");
+        console.log("handling procedure selection");
+        
         try {
             const userToken = await AsyncStorage.getItem('userToken');
-            const userRef = doc(db, 'users', userToken);
-            await updateDoc(userRef, {
-                selectedProcedure: procedure
-            });
-            await AsyncStorage.setItem('selectedProcedure', procedure);
-            console.log('set procedure w/ async:', procedure);
+            if (userToken){
+                const userRef = doc(db, 'users', userToken);
+                await updateDoc(userRef, {
+                    selectedProcedure: procedure
+                });
+                await AsyncStorage.setItem('selectedProcedure', procedure);
+                console.log('Procedure set w/ async:', procedure);
+                navigation.navigate('MainApp');
+            }
+            else {
+                console.log('User not logged in');
+                navigation.navigate("GenInfo", { procedure });
+            }
         } catch (error) {
             console.log('Error: ', error);
         } 
 
-        navigation.navigate("MainApp");
+        
     }
     
     return(

@@ -24,6 +24,8 @@ import CalendarScreen from './screens/CalendarScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import HistoryScreen from './screens/HistoryScreen';
 import DatePickerScreen from './screens/DatePickerScreen';
+import GenInfoScreen from './screens/GenInfoScreen';
+import TimelineScreen from './screens/TimelineScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -57,12 +59,14 @@ const StackNavigator = ({ params }) => {
     <Stack.Navigator>
       {params.user ? (
         <>
+          <Stack.Screen name="MainApp" component={BottomTabNavigator} options={{ headerShown: false}}/>
+          <Stack.Screen name="Timeline" component={TimelineScreen} />
           <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
           <Stack.Screen name="Procedures" component={ProceduresScreen} />
-          <Stack.Screen name="MainApp" component={BottomTabNavigator} options={{ headerShown: false}}/>
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} options={{headerRight: () => <UserIcon />}} />
           <Stack.Screen name="DatePicker" component={DatePickerScreen} options={{headerRight: () => <UserIcon />}}/>
+          <Stack.Screen name="GenInfo" component={GenInfoScreen} options={{headerRight: () => <UserIcon />}}/>
         </>
       ) : (
         <>
@@ -72,6 +76,7 @@ const StackNavigator = ({ params }) => {
           <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
           <Stack.Screen name="Procedures" component={ProceduresScreen} />
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
+          <Stack.Screen name="GenInfo" component={GenInfoScreen} />
         </>
       )
       }
