@@ -28,10 +28,10 @@ async function uploadData(){
     await clearCollection(proceduresCollectionRef); 
 
     procedures.forEach(async (procedure) => {
-        let procedureName = procedure["Procedure Type"];
+        let procedureName = procedure["Procedure Name"];
       
         if (!procedureName || procedureName === "NaN" || procedureName === "null" || procedureName === undefined) {
-          console.error("Skipping entry due to missing or invalid CPT Code:", procedure);
+          console.error("Skipping entry due to missing or invalid Procedure Name:", procedure);
           return;
         }
       
