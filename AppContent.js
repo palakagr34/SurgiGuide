@@ -26,6 +26,8 @@ import HistoryScreen from './screens/HistoryScreen';
 import DatePickerScreen from './screens/DatePickerScreen';
 import GenInfoScreen from './screens/GenInfoScreen';
 import TimelineScreen from './screens/TimelineScreen';
+import PostSurgeryScreen from './screens/PostSurgeryScreen';
+import PreSurgeryScreen from './screens/PreSurgeryScreen';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -60,6 +62,8 @@ const StackNavigator = ({ params }) => {
       {params.user ? (
         <>
           <Stack.Screen name="MainApp" component={BottomTabNavigator} options={{ headerShown: false}}/>
+          <Stack.Screen name="PreSurgery" component={PreSurgeryScreen} />
+          <Stack.Screen name="PostSurgery" component={PostSurgeryScreen} />
           <Stack.Screen name="Timeline" component={TimelineScreen} />
           <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
           <Stack.Screen name="Procedures" component={ProceduresScreen} />

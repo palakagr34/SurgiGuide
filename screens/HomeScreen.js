@@ -66,8 +66,8 @@ export default function HomeScreen({ route, navigation, procedure }) {
                     </ScrollView>
 
                     
-                    <Button title="Pre-Surgery" />
-                    <Button title="Post-Surgery" />        
+                    <Button title="Pre-Surgery" onPress={()=> navigation.navigate("PreSurgery")}/>
+                    <Button title="Post-Surgery" onPress={()=> navigation.navigate("PostSurgery")}/>        
                     <Button title="General Info" onPress={()=> navigation.navigate('GenInfo')} />
                 </>
             ): (
