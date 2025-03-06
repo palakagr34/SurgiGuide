@@ -50,4 +50,8 @@ const styles = StyleSheet.create({
         marginBottom: 15,
         lineHeight: 24,
     },
+    background: {
+        flex: 1,
+        resizeMode: 'cover',
+    }, 
 });

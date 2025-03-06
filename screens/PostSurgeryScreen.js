@@ -5,7 +5,7 @@ export default function PostSurgeryScreen ({navigation}){
     return (
         <ImageBackground source={require('../assets/background3.png')} style={styles.background}>
         <ScrollView style={styles.container}>
-            <Text style={styles.title}>Post Surgery Tips</Text>
+            <Text style={styles.title}>After your surgery</Text>
 
             <View style={styles.outerSection}>
             <View style={styles.section}>
@@ -83,4 +83,8 @@ const styles = StyleSheet.create({
         color: '#333',
         lineHeight: 24,
     },
+    background: {
+        flex: 1,
+        resizeMode: 'cover',
+    }, 
 });

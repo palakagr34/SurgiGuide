@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, ScrollView, ActivityIndicator} from 'react-native'; 
+import {View, Text, StyleSheet, ScrollView, ActivityIndicator, ImageBackground} from 'react-native'; 
 import { getDoc, doc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
 
@@ -29,23 +29,40 @@ export default function TimelineScreen ({navigation, route}){
         fetchMessage();
     }, [title]);
 
+    const renderBullets = (message) => {
+        return message.split(/\n+/).map((item, index) => (
+            <View key={index} style={styles.bulletContainer}> {/* Fixed style name */}
+                <Text style={styles.bulletPoint}>{'\u2022'}</Text>
+                <Text style={styles.bulletText}>{item.trim()}</Text> {/* Trim to remove extra spaces */}
+            </View>
+        ));
+    };
+
     return (
-        <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>{title}</Text>
-            {message ? (
-                <Text style={styles.message}>{message}</Text>
-            ) : (
-                <ActivityIndicator size="large" color="#0000ff" />
-            )}
-        </ScrollView>
+        <ImageBackground source={require('../assets/background3.png')} style={styles.background}>
+            <ScrollView contentContainerStyle={styles.container}>
+                <Text style={styles.title}>{title}</Text>
+                <View style={styles.section}>
+                    {message ? (
+                        renderBullets(message)
+                    ) : (
+                        <ActivityIndicator size="large" color="#0000ff" />
+                    )}
+                </View>
+            </ScrollView>
+        </ImageBackground>
     )
 }
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        resizeMode: 'cover',
+    }, 
     container: {
         flexGrow: 1,
         padding: 20,
-        backgroundColor: '#fff',
+        paddingTop: 100,
     },
     title: {
         fontSize: 24,
@@ -53,9 +70,33 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         textAlign: 'center',
     },
+    section: {
+        backgroundColor: '#c4ecee',
+        padding: 20,
+        borderRadius: 15,
+        elevation: 4, 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+    },
     message: {
         fontSize: 16,
         color: '#333',
         textAlign: 'left',
+    },
+    bulletContainer: {
+        flexDirection: 'row',
+        marginBottom: 10,
+    },
+    bulletPoint: {
+        fontSize: 20,
+        lineHeight: 30,
+        marginRight: 10,
+    },
+    bulletText: {
+        fontSize: 16,
+        lineHeight: 30,
+        flex: 1,
     },
 });

@@ -79,7 +79,7 @@ const StackNavigator = ({ params }) => {
           <Stack.Screen name="MainApp" component={BottomTabNavigator} options={{ headerShown: false}}/>
           <Stack.Screen name="PreSurgery" component={PreSurgeryScreen} options={{headerTransparent: true, headerTitle: ''}}/>
           <Stack.Screen name="PostSurgery" component={PostSurgeryScreen} options={{headerTransparent: true, headerTitle: ''}}/>
-          <Stack.Screen name="Timeline" component={TimelineScreen} />
+          <Stack.Screen name="Timeline" component={TimelineScreen} options={{headerTransparent: true, headerTitle: ''}}/>
           <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
           <Stack.Screen name="Procedures" component={ProceduresScreen} />
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
