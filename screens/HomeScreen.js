@@ -101,6 +101,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
+        paddingTop: 110,
     },
     title: {
         fontSize: 24,

@@ -46,7 +46,7 @@ const BottomTabNavigator = ({route}) => {
       >
       <Tab.Screen name="Chatbot" component={ChatbotScreen} options={{headerRight: () => <UserIcon />}} />
       <Tab.Screen name="Notes" component={NotesScreen} options={{headerRight: () => <UserIcon />}} />
-      <Tab.Screen name="Home" options={{headerRight: () => <UserIcon />}}>
+      <Tab.Screen name="Home" options={{headerTransparent: true, headerTitle: '', headerRight: () => <UserIcon />}}>
         {props => <HomeScreen {...props} procedure={procedure} />}
       </Tab.Screen>
       <Tab.Screen name="Calendar" component={CalendarScreen} options={{headerRight: () => <UserIcon />}} />
