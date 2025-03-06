@@ -31,9 +31,9 @@ export default function TimelineScreen ({navigation, route}){
 
     const renderBullets = (message) => {
         return message.split(/\n+/).map((item, index) => (
-            <View key={index} style={styles.bulletContainer}> {/* Fixed style name */}
-                <Text style={styles.bulletPoint}>{'\u2022'}</Text>
-                <Text style={styles.bulletText}>{item.trim()}</Text> {/* Trim to remove extra spaces */}
+            <View key={index} style={styles.bulletContainer}> 
+                <Text style={styles.bulletPoint}>• </Text>
+                <Text style={styles.bulletText}>{item.trim()}</Text> 
             </View>
         ));
     };

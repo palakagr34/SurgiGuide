@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {View, Text, Button, StyleSheet, Modal, TouchableOpacity} from 'react-native'; 
+import {View, Text, Button, StyleSheet, Modal, TouchableOpacity, ImageBackground} from 'react-native'; 
 import {Calendar} from 'react-native-calendars';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig';
@@ -55,18 +55,30 @@ export default function CalendarScreenScreen ({navigation}){
 
 
     return (
+        <ImageBackground source={require('../assets/background3.png')} style={styles.background}>
         <View style={styles.container}>
+            <Text style={styles.title}>Calendar</Text>
             <Calendar onDayPress={dayPress}
                 markedDates={procedureDates}
+                hideExtraDays={true}
                 theme={{
                     todayTextColor: 'blue',
                     arrowColor: 'blue',
+                    backgroundColor: 'transparent',
+                    calendarBackground: 'transparent',
+                    textSectionTitleColor: 'black',
+                    dayTextColor: 'black',
+                    selectedDayBackgroundColor: 'blue',
+                    selectedDayTextColor: 'white',
+                    monthTextColor: 'black',
+                    indicatorColor: 'blue',
                 }}
             />
-            <View style={styles.buttonContainer}>
-                <Button title="Add Surgery" onPress={()=> navigation.navigate('DatePicker', { type: 'surgery' } )} />
-                <Button title="Add Follow up" onPress={() => navigation.navigate('DatePicker', { type: 'follow-up' })} />
-            </View>
+
+            <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('DatePicker')}>
+                <Text style={styles.buttonText}>Add Event</Text>
+            </TouchableOpacity>
+
             { boxVisible && selectedProcedure && (
                 <View style={styles.infoBox}>
                     <Text style={styles.infoTitle}>{selectedProcedure.name}</Text>
@@ -77,33 +89,60 @@ export default function CalendarScreenScreen ({navigation}){
                 </View>
             )}
         </View>
+        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        resizeMode: 'cover',
+    }, 
+    title: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
+    button: {
+        backgroundColor: '#e9f2eb',
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        borderRadius: 15,
+        marginBottom: 10,
+        marginTop: 20,
+        shadowColor: '#000', 
+        shadowOffset: { width: 0, height: 2 }, 
+        shadowOpacity: 0.8, 
+        shadowRadius: 2, 
+        elevation: 5, 
+        width: '50%',
+        alignSelf: 'center',
+      },
+      buttonText: {
+        color: '#007bff', 
+        fontSize: 18, 
+        textAlign: 'center',
+        fontFamily: 'KulimPark-Regular',
+      },
     container: {
         flex: 1,
         padding: 20,
-        backgroundColor: '#fff',
-    },
-    buttonContainer: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        marginTop: 20,
+        paddingTop: 100,
     },
     infoBox: {
         position: 'absolute',
-        bottom: 20,
+        bottom: 100,
         left: 20,
         right: 20,
-        padding: 15,
-        backgroundColor: 'white',
-        borderRadius: 5,
+        padding: 25,
+        backgroundColor: '#f1e6cd',
+        borderRadius: 25,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.8,
-        shadowRadius: 2,
+        shadowRadius: 3,
         elevation: 5,
     },
     infoTitle: {
