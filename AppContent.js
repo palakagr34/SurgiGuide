@@ -77,15 +77,15 @@ const StackNavigator = ({ params }) => {
       {params.user ? (
         <>
           <Stack.Screen name="MainApp" component={BottomTabNavigator} options={{ headerShown: false}}/>
-          <Stack.Screen name="PreSurgery" component={PreSurgeryScreen} />
-          <Stack.Screen name="PostSurgery" component={PostSurgeryScreen} />
+          <Stack.Screen name="PreSurgery" component={PreSurgeryScreen} options={{headerTransparent: true, headerTitle: ''}}/>
+          <Stack.Screen name="PostSurgery" component={PostSurgeryScreen} options={{headerTransparent: true, headerTitle: ''}}/>
           <Stack.Screen name="Timeline" component={TimelineScreen} />
           <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
           <Stack.Screen name="Procedures" component={ProceduresScreen} />
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
           <Stack.Screen name="Settings" component={SettingsScreen} options={{headerRight: () => <UserIcon />}} />
           <Stack.Screen name="DatePicker" component={DatePickerScreen} options={{headerRight: () => <UserIcon />}}/>
-          <Stack.Screen name="GenInfo" component={GenInfoScreen} options={{headerRight: () => <UserIcon />}}/>
+          <Stack.Screen name="GenInfo" component={GenInfoScreen} options={{headerTransparent: true, headerTitle: '', headerRight: () => <UserIcon />}}/>
         </>
       ) : (
         <>

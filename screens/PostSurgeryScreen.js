@@ -1,11 +1,13 @@
 import React from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native'; 
+import {View, Text, ScrollView, StyleSheet, ImageBackground} from 'react-native'; 
 
 export default function PostSurgeryScreen ({navigation}){
     return (
+        <ImageBackground source={require('../assets/background3.png')} style={styles.background}>
         <ScrollView style={styles.container}>
             <Text style={styles.title}>Post Surgery Tips</Text>
 
+            <View style={styles.outerSection}>
             <View style={styles.section}>
                 <Text style={styles.subtitle}>What to Expect</Text>
                 <Text style={styles.text}>
@@ -40,7 +42,9 @@ export default function PostSurgeryScreen ({navigation}){
                     Temporary text: Follow your healthcare provider's instructions regarding physical activity. Start with light activities and gradually increase as you recover.
                 </Text>
             </View>
+            </View>
         </ScrollView>
+        </ImageBackground>
     )
 }
 
@@ -48,7 +52,7 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         padding: 20,
-        backgroundColor: '#fff',
+        paddingTop: 100,
     },
     title: {
         fontSize: 24,
@@ -58,6 +62,16 @@ const styles = StyleSheet.create({
     },
     section: {
         marginBottom: 20,
+    },
+    outerSection: {
+        backgroundColor: '#c4ecee',
+        padding: 20,
+        borderRadius: 15,
+        elevation: 4, 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
     },
     subtitle: {
         fontSize: 20,

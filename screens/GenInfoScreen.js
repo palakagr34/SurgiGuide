@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { View, Text, StyleSheet, ScrollView, Image, ActivityIndicator} from 'react-native';
+import { View, Text, StyleSheet, ScrollView, Image, ActivityIndicator, ImageBackground} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig'
@@ -52,9 +52,10 @@ export default function GenInfoScreen({ navigation, route }) {
     }, [procedureData]);
 
     return (
+        <ImageBackground source={require('../assets/background3.png')} style={styles.background}>
         <ScrollView contentContainerStyle={styles.container}>
-            <Text style={styles.title}>{selectedProcedure}</Text>
             <Text style={styles.subtitle}>General Information</Text>
+            <View style={styles.outerSection}>
             {procedureData ? (
             <>
                 <View style={styles.section}>
@@ -90,15 +91,21 @@ export default function GenInfoScreen({ navigation, route }) {
             ) : (
                 <ActivityIndicator size="large" color="#0000ff" /> //Loading indicator 
             )}
+            </View>
         </ScrollView>
+        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
+    background: {
+        flex: 1,
+        resizeMode: 'cover',
+    },
     container: {
         flexGrow: 1,
+        paddingTop: 100,
         padding: 20,
-        backgroundColor: '#fff',
     },
     title: {
         fontSize: 22,
@@ -112,8 +119,20 @@ const styles = StyleSheet.create({
         marginBottom: 20,
         textAlign: 'center',
     },
+    outerSection: {
+        backgroundColor: '#c4ecee',
+        padding: 20,
+        borderRadius: 15,
+        elevation: 4, 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
+    },
     section: {
-        marginBottom: 20,
+        backgroundColor: '#c4ecee',
+        padding: 20,
+        borderRadius: 15,
     },
     label: {
         fontSize: 18,
