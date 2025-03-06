@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useContext, useState, useEffect } from 'react';
-import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View, Image } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
@@ -39,9 +39,24 @@ const BottomTabNavigator = ({route}) => {
     <Tab.Navigator
         initialRouteName="Home"
         screenOptions={({ route }) => ({
-          tabBarActiveTintColor: "blue",
-          tabBarInactiveTintColor: "gray",
-          tabBarStyle: { height: 60, paddingBottom: 10 }, // Adjust styling
+          tabBarStyle: { ...styles.tabBar }, 
+          tabBarShowLabel: false, 
+          tabBarIcon: ({ focused, color, size=30 }) => { 
+            let iconName;
+
+            if (route.name === 'Chatbot') {
+              iconName = require('./assets/chatbot.png');
+            } else if (route.name === 'Notes') {
+              iconName = require('./assets/notes.png');
+            } else if (route.name === 'Home') {
+              iconName = require('./assets/surgiIntro.png');
+            } else if (route.name === 'Calendar') {
+              iconName = require('./assets/calendar.png');
+            } else if (route.name === 'History') {
+              iconName = require('./assets/history.png');
+            }
+            return <Image source={iconName} style={styles.tabIcons} />;
+          },
         })}
       >
       <Tab.Screen name="Chatbot" component={ChatbotScreen} options={{headerRight: () => <UserIcon />}} />
@@ -139,5 +154,30 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 40, 
     color: 'blue'
+  }, 
+  tabBar: {
+    height: 60,
+    paddingTop: 5, 
+    backgroundColor: '#e5ce9d', // Adjusted to match the beige color from the image
+    borderTopLeftRadius: 20, // Rounded edges
+    borderTopRightRadius: 20,
+    position: 'absolute', // Ensures the bar has rounded edges properly
+    left: 0,
+    right: 0,
+    bottom: 0,
+    elevation: 5, // Adds slight shadow for depth
+    shadowColor: "black",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
+  }, 
+  tabIcons: {
+    width: 32, 
+    height: 32, 
+    resizeMode: 'contain',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
   }
 });

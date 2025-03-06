@@ -150,13 +150,19 @@ const styles = StyleSheet.create({
         flexDirection: "column",
         width: "90%",
         alignItems: "center",
+        paddingBottom: 90,
     },
     infoButton: {
-        width: "100%", // Makes buttons uniform
+        width: "100%", 
         paddingVertical: 35, 
-        borderRadius: 20, // Rounded corners
+        borderRadius: 20, 
         alignItems: "center",
         justifyContent: "center",
+        elevation: 7, 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 5 },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
     },
     infoButtonText: {
         fontSize: 20,
