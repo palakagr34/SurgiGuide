@@ -1,11 +1,10 @@
 import React from 'react';
-import { View, Text,TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text,TextInput, Button, StyleSheet, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { db } from '../firebaseConfig'; 
 import { doc, getDoc } from "firebase/firestore";
 import { login } from '../firebaseAuth'; // Import the login function
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 
 export default function LoginScreen({ navigation }) {
@@ -42,7 +41,7 @@ export default function LoginScreen({ navigation }) {
               }
             }
 
-            Alert.alert("Login Successful!"); 
+            console.log("Login Successful!"); 
 
         } catch (error) {
             console.log("Login Failed", error.message);
@@ -50,7 +49,10 @@ export default function LoginScreen({ navigation }) {
     }
 
   return (
+    <ImageBackground source={require('../assets/background2.png')} style={styles.background}>
     <View style={styles.container}>
+      <Image source={require('../assets/surgi2.png')} style={styles.image}/>
+      
       <Text style={styles.title}>Welcome Back!</Text>
       <Text style={styles.subtitle}>Login</Text>
       <TextInput 
@@ -71,18 +73,33 @@ export default function LoginScreen({ navigation }) {
         secureTextEntry
       />
       <Button title="Login" onPress={handleLogin} />
-
     </View>
+    <View style={styles.bottomContainer}>
+      <Text style={styles.bottomText}>Are you new here? </Text>
+      <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+        <Text style={[styles.bottomText, styles.signupLink]}>Sign up!</Text>
+      </TouchableOpacity>
+    </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+  },  
+  container: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       padding: 20,
-      backgroundColor: '#fff',
+      paddingBottom: 200
+    },
+    image: {
+      width: 100,
+      height: 100,
+      marginBottom: 10,
     },
     title: {
       fontSize: 24,
@@ -98,14 +115,15 @@ const styles = StyleSheet.create({
         fontFamily: 'KulimPark-Regular'
       },
     input: {
-      width: '100%',
+      width: '80%',
       height: 40,
       borderColor: '#ccc',
       borderWidth: 1,
-      borderRadius: 5,
+      borderRadius: 15,
       marginBottom: 15,
       paddingHorizontal: 10,
       fontSize: 16,
+      backgroundColor: '#dff0e3',
       color: '#333',
     },
     signupText: {
@@ -113,7 +131,22 @@ const styles = StyleSheet.create({
       fontSize: 16,
       color: '#555',
       fontFamily: 'KulimPark-Regular'
-
+    },
+    signupLink: {
+      color: '#007bff',
+      textDecorationLine: 'underline',
+    },
+    bottomContainer: {
+      position: 'absolute',
+      bottom: 100, // Adjusted to position the text 100 units from the bottom
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    bottomText: {
+      fontSize: 16,
+      fontFamily: 'KulimPark-Regular',
+      color: '#555',
     },
     signupLink: {
       color: '#007bff',

@@ -75,8 +75,8 @@ const StackNavigator = ({ params }) => {
       ) : (
         <>
           <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false}} />
-          <Stack.Screen name ="Login" component = {LoginScreen}/>
-          <Stack.Screen name="Register" component = {RegisterScreen} />
+          <Stack.Screen name ="Login" component = {LoginScreen} options={{ headerShown: false}}/>
+          <Stack.Screen name="Register" component = {RegisterScreen} options={{ headerShown: false}}/>
           <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
           <Stack.Screen name="Procedures" component={ProceduresScreen} />
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />

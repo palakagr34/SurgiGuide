@@ -1,11 +1,10 @@
 import React from 'react';
-import { View, Text,TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { View, Text,TextInput, Button, StyleSheet, Alert, ImageBackground, Image, TouchableOpacity } from 'react-native';
 import { useState } from 'react';
 import { signUp } from '../firebaseAuth'; // Import the signUp function
 import { doc, setDoc } from "firebase/firestore"; 
 import { db } from '../firebaseConfig';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 
 
 export default function RegisterScreen({ navigation }) {
@@ -45,8 +44,7 @@ export default function RegisterScreen({ navigation }) {
             }], 
             notes:''
           });
-          Alert.alert("Registration Successful!");
-
+          console.log("Registration Successful!");
           
           navigation.reset({
             index: 0,
@@ -64,7 +62,9 @@ export default function RegisterScreen({ navigation }) {
     
 
   return (
+    <ImageBackground source={require('../assets/background2.png')} style={styles.background}>
     <View style={styles.container}>
+      <Image source={require('../assets/surgi2.png')} style={styles.image}/>
       <Text style={styles.title}>Welcome to SurgiGuide!</Text>
       <Text style={styles.subtitle}>Create a free account!</Text>
       <TextInput 
@@ -101,26 +101,34 @@ export default function RegisterScreen({ navigation }) {
       />
       <Button title="Sign up" onPress={handleRegister} />
       
-      
-      <Text style={styles.signupText}>
-              Already have an account?{' '}
-              <Text style={styles.signupLink} onPress={() => navigation.navigate('Login')}>
-                Login
-              </Text>
-            </Text>
-      
 
     </View>
+    <View style={styles.bottomContainer}>
+          <Text style={styles.bottomText}>Already have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+            <Text style={[styles.bottomText, styles.signinLink]}>Login</Text>
+          </TouchableOpacity>
+        </View>
+    </ImageBackground>
   );
 }
 
 const styles = StyleSheet.create({
+    background: {
+      flex: 1,
+      resizeMode: 'cover',
+    },
     container: {
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
       padding: 20,
-      backgroundColor: '#fff',
+      paddingBottom: 200
+    },
+    image: {
+      width: 100,
+      height: 100,
+      marginBottom: 10,
     },
     title: {
       fontSize: 24,
@@ -135,22 +143,40 @@ const styles = StyleSheet.create({
         fontFamily: 'KulimPark-Regular'
       },
     input: {
-      width: '100%',
+      width: '80%',
       height: 40,
       borderColor: '#ccc',
       borderWidth: 1,
-      borderRadius: 5,
+      borderRadius: 15,
       marginBottom: 15,
       paddingHorizontal: 10,
       fontSize: 16,
+      backgroundColor: '#dff0e3',
       color: '#333',
     },
     signupText: {
       marginTop: 20,
-      fontSize: 14,
+      fontSize: 16,
+      color: '#555',
+      fontFamily: 'KulimPark-Regular'
+    },
+    signinLink: {
+      color: '#007bff',
+      textDecorationLine: 'underline',
+    },
+    bottomContainer: {
+      position: 'absolute',
+      bottom: 100, // Adjusted to position the text 100 units from the bottom
+      width: '100%',
+      flexDirection: 'row',
+      justifyContent: 'center',
+    },
+    bottomText: {
+      fontSize: 16,
+      fontFamily: 'KulimPark-Regular',
       color: '#555',
     },
-    signupLink: {
+    signinLink: {
       color: '#007bff',
       textDecorationLine: 'underline',
     },

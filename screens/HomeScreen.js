@@ -1,5 +1,5 @@
 import React, { use, useContext, useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, TouchableOpacity, ScrollView, ImageBackground } from 'react-native';
 import { AuthContext, useAuth } from '../AuthContext';
 import { doc, getDoc } from "firebase/firestore";
 import { db } from '../firebaseConfig';
@@ -43,46 +43,63 @@ export default function HomeScreen({ route, navigation, procedure }) {
     }
 
     return (
-        <View style={styles.container}>
-            {procedureData ? (
-                <>
-                    <Text style={styles.title}>{procedureData["Procedure Name"]}</Text>
+        <ImageBackground source={require('../assets/background.png')} style={styles.background}>
+            <View style={styles.container}>
+                {procedureData ? (
+                    <>
+                        <Text style={styles.title}>{procedureData["Procedure Name"]}</Text>
 
-                    <ScrollView horizontal contentContainerStyle={styles.timeline}>
-                        {[
-                            { title: "Day Before Surgery" },
-                            { title: "Morning of Surgery" },
-                            { title: "Day After Surgery " },
-                            { title: "Day of Discharge" },
-                        ].map((item, index) => (
-                            <TouchableOpacity
-                                key={index}
-                                style={styles.timelineItem}
-                                onPress={() => navigation.navigate('Timeline', { title: item.title })}
-                            >
-                                <Text style={styles.timelineText}>{item.title}</Text>
-                            </TouchableOpacity>
-                        ))}
-                    </ScrollView>
+                        <ScrollView horizontal contentContainerStyle={styles.timeline} showsHorizontalScrollIndicator={false}>
+                            {[
+                                { title: "Day Before Surgery" , color: '#a5e4cb'},
+                                { title: "Morning of Surgery" , color: '#c8f1f3'},
+                                { title: "Day After Surgery " , color: '#68a8e4'},
+                                { title: "Day of Discharge" , color: '#f7ddb9'},
+                            ].map((item, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={[styles.timelineItem, { backgroundColor: item.color }] }
+                                    onPress={() => navigation.navigate('Timeline', { title: item.title })}
+                                >
+                                    <Text style={styles.timelineText}>{item.title}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </ScrollView>
 
-                    
-                    <Button title="Pre-Surgery" onPress={()=> navigation.navigate("PreSurgery")}/>
-                    <Button title="Post-Surgery" onPress={()=> navigation.navigate("PostSurgery")}/>        
-                    <Button title="General Info" onPress={()=> navigation.navigate('GenInfo')} />
-                </>
-            ): (
-                <Text>Loading...</Text>
-            )}
-        </View>
+                        <View style={styles.buttonRow}>
+                            <Text style={styles.infoTitle}>More information:</Text>
+                            {[
+                                { title: "General Information", screen: "GenInfo", color: "#baedf0" }, 
+                                { title: "Before your surgery", screen: "PreSurgery", color: "#75c2c7" }, 
+                                { title: "After your surgery", screen: "PostSurgery", color: "#aedadd" } 
+                            ].map((item, index) => (
+                                <TouchableOpacity
+                                    key={index}
+                                    style={[styles.infoButton, { backgroundColor: item.color, marginTop: index === 0 ? 0 : -20 }]}
+                                    onPress={() => navigation.navigate(item.screen)}
+                                >
+                                    <Text style={styles.infoButtonText}>{item.title}</Text>
+                                </TouchableOpacity>
+                            ))}
+                        </View>
+                    </>
+                ): (
+                    <Text>Loading...</Text>
+                )}
+            </View>
+        </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+    background: {
         flex: 1,
+        resizeMode: 'cover',
+    },
+    container: {
+        flexGrow: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
         padding: 20,
     },
     title: {
@@ -92,32 +109,58 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     timeline: {
+        flexGrow: 1,
         flexDirection: "row",
         paddingVertical: 10,
-        paddingHorizontal: 5,
-        height: 100,
+        paddingHorizontal: 0,
+        height: 120, // Increased for a balanced layout
+        alignItems: "center", // Centers items vertically
     },
     timelineItem: {
-        backgroundColor: "#007bff", // Primary blue color
-        paddingVertical: 8,
-        paddingHorizontal: 12,
-        borderRadius: 15, // Rounded buttons
-        marginHorizontal: 6, // Space between buttons
-        elevation: 3, // Shadow on Android
-        shadowColor: "#000", // Shadow on iOS
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
+        paddingVertical: 10, 
+        paddingHorizontal: 5,
+        borderRadius: 20, 
+        marginHorizontal: 4, 
+        height: 100, 
+        width: 100,
+        alignItems: "center", 
+        justifyContent: "center",
+        elevation: 4, 
+        shadowColor: "#000", 
+        shadowOffset: { width: 0, height: 3 },
+        shadowOpacity: 0.15,
+        shadowRadius: 4,
     },
     timelineText: {
-        color: "#fff", // White text
-        fontWeight: "bold",
+        color: "#000", 
+        fontWeight: "600",
+        fontSize: 17, 
         textAlign: "center",
     },
-    buttonRow: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        width: '100%',
-        marginTop: 10,
+    infoTitle: {
+        fontSize: 22,
+        fontWeight: "bold",
+        marginBottom: 15,
+        color: "black",  
+        alignSelf: "flex-start",
+        paddingLeft: 10,
     },
+    buttonRow: {
+        flexDirection: "column",
+        width: "90%",
+        alignItems: "center",
+    },
+    infoButton: {
+        width: "100%", // Makes buttons uniform
+        paddingVertical: 35, 
+        borderRadius: 20, // Rounded corners
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    infoButtonText: {
+        fontSize: 20,
+        fontWeight: "bold",
+        color: "#333",
+    },
+
 });
