@@ -1,45 +1,78 @@
-import React from 'react';
-import {View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity} from 'react-native'; 
+import React, {useState} from 'react';
+import {View, Text, TextInput, FlatList, StyleSheet, TouchableOpacity, ImageBackground} from 'react-native'; 
 
 export default function ChatbotScreen ({ navigation }){
-    const messages = [
+    const [messages, setMessages] = useState([{id: '1', text: 'Hello! How can I assist you today?', sender: 'bot'}]);
+
+    const messages1 = [
         {id: '1', text: 'Hello! How can I assist you today?', sender: 'bot'},
         {id: '2', text: 'I need some help.', sender: 'user'},
     ];
+    const [inputText, setInputText] = useState('');
+
+    const handleSend = () => {
+      if(inputText.trim()){
+        setMessages([...messages, {text: inputText, sender: 'user'}]);
+        setInputText('');
+      }
+    };
+
+    const renderItem = ({ item }) => (
+      <View style={[styles.messageContainer, item.sender==='user' ? styles.userMessage : styles.botMessage]}>
+        <Text style={styles.messageText}>{item.text}</Text>
+      </View>
+    );
     
     return (
+      <ImageBackground source={require('../assets/background3.png')} style={styles.background}>
         <View style={styles.container}>
-            {/* Chat messages */}
+            <Text style={styles.title}>Chat with Surgi</Text>
             <FlatList 
                 data={messages} 
-                keyExtractor={(item) => item.id.toString()} 
-                renderItem={({item}) => (
-                <View style={[styles.messageContainer, item.sender === 'bot' ? styles.botMessage : styles.userMessage]}>
-                    <Text style={styles.messageText}>{item.text}</Text>
-                </View>
-            )}
+                renderItem={renderItem}
+                keyExtractor={(item, index) => index.toString()}
+                contentContainerStyle={styles.messagesContainer}
             />
-            {/* Input container */}
+
             <View style={styles.inputContainer}>
-                <TextInput style={styles.input} placeholder="Type a message..." />
-                <TouchableOpacity style={styles.sendButton}>
+                <TextInput 
+                  style={styles.input}
+                  value={inputText}
+                  onChangeText={setInputText} 
+                  placeholder="Type a message..." 
+                />
+                <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
                     <Text style={styles.sendButtonText}>Send</Text>
                 </TouchableOpacity>
             </View>
         </View>
+      </ImageBackground>
     );
 }
 
 const styles = StyleSheet.create({
-    container: {
+  background: {
+    flex: 1,
+    resizeMode: 'cover',
+  },  
+  title: {
+    fontSize: 24,
+    marginBottom: 20,
+    textAlign: 'center',
+},
+  container: {
       flex: 1,
       padding: 10,
-      backgroundColor: '#f5f5f5',
+      paddingTop: 80,
+    },
+    messagesContainer: {
+      flexGrow: 1,
+      justifyContent: 'flex-end',
     },
     messageContainer: {
       padding: 10,
-      marginVertical: 5,
       borderRadius: 10,
+      marginBottom: 10,
       maxWidth: '80%',
     },
     userMessage: {
@@ -48,7 +81,7 @@ const styles = StyleSheet.create({
     },
     botMessage: {
       alignSelf: 'flex-start',
-      backgroundColor: '#e0e0e0',
+      backgroundColor: '#a6a49d',
     },
     messageText: {
       color: '#fff',
@@ -57,9 +90,9 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       alignItems: 'center',
       padding: 10,
-      backgroundColor: '#fff',
       borderTopWidth: 1,
       borderColor: '#ddd',
+      paddingBottom: 60
     },
     input: {
       flex: 1,
@@ -68,6 +101,7 @@ const styles = StyleSheet.create({
       borderColor: '#ccc',
       borderRadius: 20,
       marginRight: 10,
+      backgroundColor: 'white'
     },
     sendButton: {
       backgroundColor: '#007bff',

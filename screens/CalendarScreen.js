@@ -100,7 +100,6 @@ const styles = StyleSheet.create({
     }, 
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
     },
@@ -128,7 +127,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 20,
-        paddingTop: 100,
+        paddingTop: 80,
     },
     infoBox: {
         position: 'absolute',

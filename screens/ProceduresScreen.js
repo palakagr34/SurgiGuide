@@ -1,6 +1,6 @@
 // Page to search for specific procedure filtered by specialty and subspecialty 
 import {React, useEffect, useState} from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, FlatList, ImageBackground } from 'react-native';
 import { db } from "../firebaseConfig"; // Import Firestore instance
 import { getFirestore, collection, doc, updateDoc, getDocs, query, where } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -61,6 +61,7 @@ export default function ProceduresScreen({ route, navigation }) {
     }
     
     return(
+      <ImageBackground source={require('../assets/background4.png')} style={styles.background}>
         <View style={styles.container}>
             <Text style={styles.title}>{specialty} Procedures</Text>
             <FlatList
@@ -73,20 +74,24 @@ export default function ProceduresScreen({ route, navigation }) {
                 )}
             />
         </View>
+      </ImageBackground>
     )
 }
 
 
 const styles = StyleSheet.create({
+    background: {
+      flexGrow: 1
+    },
     container: {
       flex: 1,
       padding: 20,
-      backgroundColor: "#fff",
+      paddingTop: 80,
     },
     title: {
       fontSize: 24,
-      fontWeight: "bold",
       marginBottom: 20,
+      textAlign: 'center',
     },
     item: {
       fontSize: 18,

@@ -1,6 +1,6 @@
 // Page to pick a specialty of procedure
 import {React, useEffect, useState} from 'react';
-import { View, Text, Button, FlatList, TouchableOpacity, ActivityIndicator, StyleSheet, loading } from 'react-native';
+import { View, Text, Button, FlatList, TouchableOpacity, ActivityIndicator, StyleSheet, loading , ImageBackground} from 'react-native';
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { db } from "../firebaseConfig"; // Ensure this is correctly pointing to firebaseConfig.js
 
@@ -35,6 +35,7 @@ export default function SpecialtiesScreen({ navigation }) {
 
 
   return (
+    <ImageBackground source={require('../assets/background4.png')} style={styles.background}>
     <View style={styles.container}>
       <Text style={styles.title}>Specialties</Text>
       {loading ? (
@@ -51,20 +52,24 @@ export default function SpecialtiesScreen({ navigation }) {
         />
       )}
     </View>
+    </ImageBackground>
   );
 
 };
 
 const styles = StyleSheet.create({
+    background: {
+      flexGrow: 1,
+    },  
     container: {
       flex: 1,
       padding: 20,
-      backgroundColor: "#fff",
+      paddingTop: 80,
     },
     title: {
       fontSize: 24,
-      fontWeight: "bold",
       marginBottom: 20,
+      textAlign: 'center',
     },
     item: {
       fontSize: 18,

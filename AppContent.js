@@ -17,7 +17,6 @@ import RegisterScreen from './screens/RegisterScreen';
 import UserIcon from './components/UserIcon';
 import SpecialtiesScreen from './screens/SpecialtiesScreen';
 import ProceduresScreen from './screens/ProceduresScreen';
-import SetProcedureScreen from './screens/SetProcedureScreen';
 import ChatbotScreen from './screens/ChatbotScreen';
 import NotesScreen from './screens/NotesScreen';
 import CalendarScreen from './screens/CalendarScreen';
@@ -59,8 +58,8 @@ const BottomTabNavigator = ({route}) => {
           },
         })}
       >
-      <Tab.Screen name="Chatbot" component={ChatbotScreen} options={{headerRight: () => <UserIcon />}} />
-      <Tab.Screen name="Notes" component={NotesScreen} options={{headerRight: () => <UserIcon />}} />
+      <Tab.Screen name="Chatbot" component={ChatbotScreen} options={{headerTransparent: true, headerTitle: '', headerRight: () => <UserIcon />}} />
+      <Tab.Screen name="Notes" component={NotesScreen} options={{headerTransparent: true, headerTitle: '', headerRight: () => <UserIcon />}} />
       <Tab.Screen name="Home" options={{headerTransparent: true, headerTitle: '', headerRight: () => <UserIcon />}}>
         {props => <HomeScreen {...props} procedure={procedure} />}
       </Tab.Screen>
@@ -80,9 +79,8 @@ const StackNavigator = ({ params }) => {
           <Stack.Screen name="PreSurgery" component={PreSurgeryScreen} options={{headerTransparent: true, headerTitle: ''}}/>
           <Stack.Screen name="PostSurgery" component={PostSurgeryScreen} options={{headerTransparent: true, headerTitle: ''}}/>
           <Stack.Screen name="Timeline" component={TimelineScreen} options={{headerTransparent: true, headerTitle: ''}}/>
-          <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
-          <Stack.Screen name="Procedures" component={ProceduresScreen} />
-          <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
+          <Stack.Screen name="Specialties" component={SpecialtiesScreen} options={{ headerShown: false}}/>
+          <Stack.Screen name="Procedures" component={ProceduresScreen} options={{ headerShown: false}}/>
           <Stack.Screen name="Settings" component={SettingsScreen} options={{headerRight: () => <UserIcon />}} />
           <Stack.Screen name="DatePicker" component={DatePickerScreen} options={{headerTransparent: true, headerTitle: '', headerRight: () => <UserIcon />}}/>
           <Stack.Screen name="GenInfo" component={GenInfoScreen} options={{headerTransparent: true, headerTitle: '', headerRight: () => <UserIcon />}}/>
@@ -92,9 +90,8 @@ const StackNavigator = ({ params }) => {
           <Stack.Screen name="Welcome" component={WelcomeScreen} options={{ headerShown: false}} />
           <Stack.Screen name ="Login" component = {LoginScreen} options={{ headerShown: false}}/>
           <Stack.Screen name="Register" component = {RegisterScreen} options={{ headerShown: false}}/>
-          <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
-          <Stack.Screen name="Procedures" component={ProceduresScreen} />
-          <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
+          <Stack.Screen name="Specialties" component={SpecialtiesScreen} options={{ headerShown: false}}/>
+          <Stack.Screen name="Procedures" component={ProceduresScreen} options={{ headerShown: false}}/>
           <Stack.Screen name="GenInfo" component={GenInfoScreen} options={{headerTransparent: true, headerTitle: ''}}/>
         </>
       )

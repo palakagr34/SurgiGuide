@@ -3,6 +3,7 @@ import { TouchableOpacity, Text, StyleSheet, View, Button, TouchableWithoutFeedb
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { AuthContext } from '../AuthContext';
+import { useAuth } from '../AuthContext';
 
 export default function UserIcon(){
     const { user, signOutUser } = useContext(AuthContext);
@@ -33,13 +34,16 @@ export default function UserIcon(){
             await AsyncStorage.clear();
             console.log("Successfully logged out");
 
+            const { setUser } = useAuth(); // Get setUser from context
+            setUser(null); // This triggers re-render
+
             navigation.reset({
               index: 0,
               routes: [{ name: 'Welcome' }],
             });
 
         } catch (error) {
-            console.error("Error logging out: ", error.message);
+            console.log("Error logging out: ", error.message);
         }
         
     }

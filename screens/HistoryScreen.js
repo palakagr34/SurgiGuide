@@ -54,12 +54,14 @@ const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
         padding: 20,
-        paddingTop: 100,
+        paddingTop: 80,
         paddingBottom: 70,
+    },
+    background: {
+        flexGrow: 1,
     },
     title: {
         fontSize: 24,
-        fontWeight: 'bold',
         marginBottom: 20,
         textAlign: 'center',
     },
