@@ -65,7 +65,7 @@ const BottomTabNavigator = ({route}) => {
         {props => <HomeScreen {...props} procedure={procedure} />}
       </Tab.Screen>
       <Tab.Screen name="Calendar" component={CalendarScreen} options={{headerTransparent: true, headerTitle: '', headerRight: () => <UserIcon />}} />
-      <Tab.Screen name="History" component={HistoryScreen} options={{headerRight: () => <UserIcon />}} />
+      <Tab.Screen name="History" component={HistoryScreen} options={{headerTransparent: true, headerTitle: '', headerRight: () => <UserIcon />}} />
     </Tab.Navigator>
   );
 };
@@ -95,7 +95,7 @@ const StackNavigator = ({ params }) => {
           <Stack.Screen name="Specialties" component={SpecialtiesScreen} />
           <Stack.Screen name="Procedures" component={ProceduresScreen} />
           <Stack.Screen name="SetProcedure" component={SetProcedureScreen} />
-          <Stack.Screen name="GenInfo" component={GenInfoScreen} />
+          <Stack.Screen name="GenInfo" component={GenInfoScreen} options={{headerTransparent: true, headerTitle: ''}}/>
         </>
       )
       }
