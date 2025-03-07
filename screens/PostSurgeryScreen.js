@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, ScrollView, StyleSheet, ImageBackground} from 'react-native'; 
+import {View, Text, ScrollView, StyleSheet, ActivityIndicator, ImageBackground} from 'react-native'; 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { doc, getDoc } from 'firebase/firestore';
 import { db } from '../firebaseConfig'
@@ -35,42 +35,48 @@ export default function PostSurgeryScreen ({navigation}){
         <ImageBackground source={require('../assets/background3.png')} style={styles.background}>
         <ScrollView style={styles.container}>
             <Text style={styles.title}>After your surgery</Text>
-
             <View style={styles.outerSection}>
-            <View style={styles.section}>
-                <Text style={styles.subtitle}>What to Expect</Text>
-                <Text style={styles.text}>
-                    {procedureData["Post-surgery What to expect"]}
-                </Text>
-            </View>
+            {procedureData ? (
+                <>
+                    <View style={styles.section}>
+                        <Text style={styles.subtitle}>What to Expect</Text>
+                        <Text style={styles.text}>
+                            {procedureData["Post-surgery What to expect"]}
+                        </Text>
+                    </View>
 
-            <View style={styles.section}>
-                <Text style={styles.subtitle}>Common Symptoms Not to Be Worried About</Text>
-                <Text style={styles.text}>
-                    {procedureData["Post-surgery Common symptoms not to be worried about"]}
-                </Text>
-            </View>
+                    <View style={styles.section}>
+                        <Text style={styles.subtitle}>Common Symptoms Not to Be Worried About</Text>
+                        <Text style={styles.text}>
+                            {procedureData["Post-surgery Common symptoms not to be worried about"]}
+                        </Text>
+                    </View>
 
-            <View style={styles.section}>
-                <Text style={styles.subtitle}>Adverse Signs/Symptoms</Text>
-                <Text style={styles.text}>
-                    {procedureData["Post-surgery adverse signs/symptoms"]}
-                </Text>
-            </View>
+                    <View style={styles.section}>
+                        <Text style={styles.subtitle}>Adverse Signs/Symptoms</Text>
+                        <Text style={styles.text}>
+                            {procedureData["Post-surgery adverse signs/symptoms"]}
+                        </Text>
+                    </View>
 
-            <View style={styles.section}>
-                <Text style={styles.subtitle}>Nutrition</Text>
-                <Text style={styles.text}>
-                    {procedureData["Post-surgery nutrition"]}
-                </Text>
-            </View>
+                    <View style={styles.section}>
+                        <Text style={styles.subtitle}>Nutrition</Text>
+                        <Text style={styles.text}>
+                            {procedureData["Post-surgery nutrition"]}
+                        </Text>
+                    </View>
 
-            <View style={styles.section}>
-                <Text style={styles.subtitle}>Physical Activity</Text>
-                <Text style={styles.text}>
-                    {procedureData["Post-surgery physical activity"]}
-                </Text>
-            </View>
+                    <View style={styles.section}>
+                        <Text style={styles.subtitle}>Physical Activity</Text>
+                        <Text style={styles.text}>
+                            {procedureData["Post-surgery physical activity"]}
+                        </Text>
+                    </View>
+                </>
+            ): (
+                <ActivityIndicator size="large" color="#0000ff" />
+            )}
+            
             </View>
         </ScrollView>
         </ImageBackground>
