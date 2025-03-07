@@ -53,7 +53,7 @@ export default function HomeScreen({ route, navigation, procedure }) {
                             {[
                                 { title: "Day Before Surgery" , color: '#a5e4cb'},
                                 { title: "Morning of Surgery" , color: '#c8f1f3'},
-                                { title: "Day After Surgery " , color: '#68a8e4'},
+                                { title: "Right After Surgery " , color: '#68a8e4'},
                                 { title: "Day of Discharge" , color: '#f7ddb9'},
                             ].map((item, index) => (
                                 <TouchableOpacity

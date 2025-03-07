@@ -1,7 +1,36 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, ScrollView, StyleSheet, ImageBackground} from 'react-native'; 
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { doc, getDoc } from 'firebase/firestore';
+import { db } from '../firebaseConfig'
 
 export default function PostSurgeryScreen ({navigation}){
+    const [procedureData, setProcedureData] = useState(null);
+    const selectedProcedure = "Cerebrospinal Fluid (CSF) Shunt Procedures";
+
+    useEffect(()=> {
+        const fetchProcedureData = async() => {
+            const procedureRef = doc(db, 'procedures', selectedProcedure);
+            const docSnap = await getDoc(procedureRef);
+
+            if(docSnap.exists()){
+                setProcedureData(docSnap.data());
+                console.log("Post Surgery Procedure Data found");
+            }
+            else {
+                console.log("No post surgery procedure data was found.");
+            }
+        };
+        fetchProcedureData();
+    }, []);
+
+    useEffect(()=> {
+        if(procedureData){
+            console.log("updated procedure data:", procedureData["Procedure Name"]);
+        }
+    }, [procedureData]);
+
+
     return (
         <ImageBackground source={require('../assets/background3.png')} style={styles.background}>
         <ScrollView style={styles.container}>
@@ -11,35 +40,35 @@ export default function PostSurgeryScreen ({navigation}){
             <View style={styles.section}>
                 <Text style={styles.subtitle}>What to Expect</Text>
                 <Text style={styles.text}>
-                    Temporary text: After surgery, you may experience some discomfort and fatigue. It's normal to feel tired and have some pain at the surgical site.
+                    {procedureData["Post-surgery What to expect"]}
                 </Text>
             </View>
 
             <View style={styles.section}>
                 <Text style={styles.subtitle}>Common Symptoms Not to Be Worried About</Text>
                 <Text style={styles.text}>
-                    Temporary text: Mild swelling, bruising, and slight bleeding are common after surgery. These symptoms should gradually improve over time.
+                    {procedureData["Post-surgery Common symptoms not to be worried about"]}
                 </Text>
             </View>
 
             <View style={styles.section}>
                 <Text style={styles.subtitle}>Adverse Signs/Symptoms</Text>
                 <Text style={styles.text}>
-                    Temporary text: If you experience severe pain, excessive bleeding, high fever, or signs of infection, contact your healthcare provider immediately.
+                    {procedureData["Post-surgery adverse signs/symptoms"]}
                 </Text>
             </View>
 
             <View style={styles.section}>
                 <Text style={styles.subtitle}>Nutrition</Text>
                 <Text style={styles.text}>
-                    Temporary text: It's important to maintain a balanced diet to support your recovery. Drink plenty of fluids and eat a variety of nutritious foods.
+                    {procedureData["Post-surgery nutrition"]}
                 </Text>
             </View>
 
             <View style={styles.section}>
                 <Text style={styles.subtitle}>Physical Activity</Text>
                 <Text style={styles.text}>
-                    Temporary text: Follow your healthcare provider's instructions regarding physical activity. Start with light activities and gradually increase as you recover.
+                    {procedureData["Post-surgery physical activity"]}
                 </Text>
             </View>
             </View>

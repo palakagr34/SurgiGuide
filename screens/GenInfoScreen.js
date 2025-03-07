@@ -80,13 +80,13 @@ export default function GenInfoScreen({ navigation, route }) {
                 </View>
 
                 <View style={styles.section}>
-                    <Text style={styles.label}>Length of Procedure:</Text>
-                    <Text style={styles.value}>The length of the procedure will be displayed here.</Text>
+                    <Text style={styles.label}>Avg Time in Hospital:</Text>
+                    <Text style={styles.value}>{procedureData["Avg Time in Hospital"]}</Text>
                 </View>
 
-                <View style={styles.section}>
+                {/* <View style={styles.section}>
                     <Text style={styles.label}>Diagram:</Text>
-                </View>
+                </View> */}
             </>
             ) : (
                 <ActivityIndicator size="large" color="#0000ff" /> //Loading indicator 
